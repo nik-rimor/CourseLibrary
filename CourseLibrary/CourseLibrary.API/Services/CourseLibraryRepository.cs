@@ -88,14 +88,15 @@ namespace CourseLibrary.API.Services
 
             foreach (var course in author.Courses)
             {
-                id = Guid.NewGuid();
+                // the repository fills the id (instead of using identity columns)
+                Guid newcourseId;
 
                 do
                 {
-                    id = Guid.NewGuid();
-                } while (_context.Courses.Count(c => c.Id == id) > 0);
+                    newcourseId = Guid.NewGuid();
+                } while (_context.Courses.Count(c => c.Id == newcourseId) > 0);
 
-                course.Id = id;
+                course.Id = newcourseId;
             }
 
             _context.Authors.Add(author);
